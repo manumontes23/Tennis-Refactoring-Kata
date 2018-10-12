@@ -12,65 +12,84 @@ public class TennisGame1 implements TennisGame {
     }
 
     public void ganoPunto(String nombreJugador) {
-        if (nombreJugador == "jugador1")
+        if (nombreJugador == nombreJugador1)
             m_puntaje1 += 1;
         else
             m_puntaje2 += 1;
+        
+        
+        
     }
 
-    public String getPuntaje() {
-        String puntaje = "";
-        int tempPuntaje=0;
+    public String getPuntaje() {        
         if (m_puntaje1 == m_puntaje2)
         {
-            switch (m_puntaje1)
-            {
-                case 0:
-                        puntaje = "Amor-Todos";
-                    break;
-                case 1:
-                        puntaje = "Quince-Todos";
-                    break;
-                case 2:
-                        puntaje = "Treinta-Todos";
-                    break;
-                default:
-                        puntaje = "Deuce";
-                    break;
-                
-            }
+           return empateMensaje();
         }
         else if (m_puntaje1 >=4 || m_puntaje2 >=4)
         {
-            int minusResult = m_puntaje1 - m_puntaje2;
-            if (minusResult==1) puntaje ="Ventaja jugador1";
-            else if (minusResult ==-1) puntaje ="Ventaja jugador2";
-            else if (minusResult>=2) puntaje = "Gana jugador1";
-            else puntaje ="Gana jugador2";
+            return ventajaMensaje();
         }
         else
         {
-            for (int i=1; i<3; i++)
+        	return menorA3mensaje();
+        }        
+    }
+    
+    public String empateMensaje() {
+    	String puntaje="";
+    	switch (m_puntaje1)
+         {
+             case 0:
+                     puntaje = "Amor-Todos";
+                 break;
+             case 1:
+                     puntaje = "Quince-Todos";
+                 break;
+             case 2:
+                     puntaje = "Treinta-Todos";
+                 break;
+             default:
+                     puntaje = "Deuce";
+                 break;
+             
+         }
+    	return puntaje;
+    }
+    
+    public String ventajaMensaje() {
+    	String mensaje="";
+    	int minusResult = m_puntaje1 - m_puntaje2;
+        if (minusResult==1) mensaje ="Ventaja jugador1";
+        else if (minusResult ==-1) mensaje ="Ventaja jugador2";
+        else if (minusResult>=2) mensaje = "Gana jugador1";
+        else mensaje ="Gana jugador2";
+    	return mensaje;
+    }
+    
+    public String menorA3mensaje() {
+    	String mensaje="";
+    	int tempPuntaje=0;
+    	for (int i=1; i<3; i++)
+        {
+            if (i==1) tempPuntaje = m_puntaje1;
+            else { mensaje+="-"; tempPuntaje = m_puntaje2;}
+            switch(tempPuntaje)
             {
-                if (i==1) tempPuntaje = m_puntaje1;
-                else { puntaje+="-"; tempPuntaje = m_puntaje2;}
-                switch(tempPuntaje)
-                {
-                    case 0:
-                        puntaje+="Amor";
-                        break;
-                    case 1:
-                        puntaje+="Quince";
-                        break;
-                    case 2:
-                        puntaje+="Treinta";
-                        break;
-                    case 3:
-                        puntaje+="Cuarenta";
-                        break;
-                }
+                case 0:
+                    mensaje+="Amor";
+                    break;
+                case 1:
+                    mensaje+="Quince";
+                    break;
+                case 2:
+                    mensaje+="Treinta";
+                    break;
+                case 3:
+                    mensaje+="Cuarenta";
+                    break;
             }
         }
-        return puntaje;
+    	return mensaje;
     }
 }
